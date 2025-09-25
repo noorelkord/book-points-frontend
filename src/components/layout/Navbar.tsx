@@ -16,24 +16,72 @@ export default function Navbar() {
   };
 
   return (
-    <header className="border-b bg-white/80 backdrop-blur dark:bg-gray-900/80">
-      <div className="container-responsive flex h-14 items-center justify-between">
-        <Link to="/" className="font-semibold">BookPoints</Link>
-        <nav className="flex items-center gap-4 text-sm">
-          <NavLink to="/" className={({ isActive }) => isActive ? 'font-medium' : ''}>Home</NavLink>
-          <NavLink to="/items" className={({ isActive }) => isActive ? 'font-medium' : ''}>Items</NavLink>
-          <NavLink to="/search" className={({ isActive }) => isActive ? 'font-medium' : ''}>Search</NavLink>
+    <header className="bg-primary-600 shadow-lg">
+      <div className="container-responsive flex h-16 items-center justify-between">
+        <Link to="/" className="text-white font-bold text-xl">BookPoints</Link>
+        <nav className="flex items-center gap-6 text-sm">
+          <NavLink 
+            to="/" 
+            className={({ isActive }) => 
+              `text-white font-medium hover:text-primary-100 transition-colors ${isActive ? 'text-primary-100' : ''}`
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink 
+            to="/items" 
+            className={({ isActive }) => 
+              `text-white font-medium hover:text-primary-100 transition-colors ${isActive ? 'text-primary-100' : ''}`
+            }
+          >
+            Pickup Points
+          </NavLink>
+          <NavLink 
+            to="/search" 
+            className={({ isActive }) => 
+              `text-white font-medium hover:text-primary-100 transition-colors ${isActive ? 'text-primary-100' : ''}`
+            }
+          >
+            Search
+          </NavLink>
           {user ? (
-            <div className="flex items-center gap-2">
-              <NavLink to="/reservations" className={({ isActive }) => isActive ? 'font-medium' : ''}>My Reservations</NavLink>
-              <NavLink to="/items/new" className="rounded bg-blue-600 px-3 py-1 text-white">New</NavLink>
-              <span className="hidden sm:inline text-gray-600 dark:text-gray-300">{user.name}</span>
-              <button onClick={handleLogout} className="text-red-600">Logout</button>
+            <div className="flex items-center gap-4">
+              <NavLink 
+                to="/reservations" 
+                className={({ isActive }) => 
+                  `text-white font-medium hover:text-primary-100 transition-colors ${isActive ? 'text-primary-100' : ''}`
+                }
+              >
+                Reservations
+              </NavLink>
+              <NavLink 
+                to="/items/new" 
+                className="bg-white text-primary-600 px-4 py-2 rounded-input font-medium hover:bg-primary-50 transition-colors"
+              >
+                New Item
+              </NavLink>
+              <span className="hidden sm:inline text-white text-sm">{user.name}</span>
+              <button 
+                onClick={handleLogout} 
+                className="text-white hover:text-primary-100 transition-colors font-medium"
+              >
+                Logout
+              </button>
             </div>
           ) : (
-            <div className="flex items-center gap-3">
-              <NavLink to="/login">Login</NavLink>
-              <NavLink to="/register" className="rounded bg-blue-600 px-3 py-1 text-white">Register</NavLink>
+            <div className="flex items-center gap-4">
+              <NavLink 
+                to="/login" 
+                className="text-white font-medium hover:text-primary-100 transition-colors"
+              >
+                Login
+              </NavLink>
+              <NavLink 
+                to="/register" 
+                className="bg-white text-primary-600 px-4 py-2 rounded-input font-medium hover:bg-primary-50 transition-colors"
+              >
+                Register
+              </NavLink>
             </div>
           )}
         </nav>

@@ -24,32 +24,60 @@ export default function ItemCard({ item, onReserved, showReserveButton = true }:
   const isOwner = false; // backend relationship not provided; assume false
 
   return (
-    <div className="rounded border p-4 shadow-sm">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h3 className="text-lg font-semibold">{item.title}</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-300">{item.type} • {item.stage}</p>
-          {item.college && <p className="text-sm">{item.college.name}</p>}
-          {item.meeting_point && <p className="text-sm">Meet at: {item.meeting_point.name}</p>}
-          {item.owner && (
-            <div className="mt-2 p-2 bg-blue-50 rounded border-l-4 border-blue-400">
-              <p className="text-sm font-medium text-blue-800">المانح: {item.owner.name}</p>
-              <p className="text-sm text-blue-600">📞 {item.owner.phone}</p>
-            </div>
+    <div className="card p-6 card-hover">
+      <div className="flex items-start justify-between gap-4 mb-4">
+        <div className="flex-1">
+          <h3 className="text-lg font-bold text-gray-800 mb-2">{item.title}</h3>
+          <p className="text-sm text-gray-600 mb-1">{item.type} • {item.stage}</p>
+          {item.college && <p className="text-sm text-gray-500 mb-1">{item.college.name}</p>}
+          {item.meeting_point && (
+            <p className="text-sm text-gray-500 mb-2">
+              📍 {item.meeting_point.name}
+            </p>
           )}
-          {item.description && <p className="mt-2 text-sm">{item.description}</p>}
-
+          {item.description && (
+            <p className="text-sm text-gray-600 mt-2 line-clamp-2">{item.description}</p>
+          )}
         </div>
         {item.image_path && (
-          <img src={item.image_path} alt={item.title} className="h-24 w-24 rounded object-cover" />
+          <img 
+            src={item.image_path} 
+            alt={item.title} 
+            className="h-20 w-20 rounded-lg object-cover flex-shrink-0" 
+          />
         )}
       </div>
-      <div className="mt-3 flex items-center gap-3">
+
+      {/* Points and Author Info */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium text-gray-600">
+            8 Points
+          </span>
+        </div>
+        {item.owner && (
+          <div className="flex items-center gap-1">
+            <span className="text-sm text-gray-500">by</span>
+            <span className="text-sm font-medium text-gray-600">{item.owner.name}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Owner Contact Info */}
+      {item.owner && (
+        <div className="bg-primary-50 rounded-lg p-3 mb-4 border border-primary-100">
+          <p className="text-sm font-medium text-primary-800 mb-1">المانح: {item.owner.name}</p>
+          <p className="text-sm text-primary-600">📞 {item.owner.phone}</p>
+        </div>
+      )}
+
+      {/* Action Button */}
+      <div className="flex items-center justify-center">
         {showReserveButton && user && !isOwner && (
           <button
             onClick={() => reserve.mutate()}
             disabled={reserve.isPending}
-            className="rounded bg-emerald-600 px-3 py-1 text-white disabled:opacity-60"
+            className="btn-primary w-full py-2 disabled:opacity-60"
           >
             {reserve.isPending ? 'Reserving...' : 'Reserve'}
           </button>
